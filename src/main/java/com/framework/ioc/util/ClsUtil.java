@@ -3,11 +3,24 @@ package com.framework.ioc.util;
 import com.framework.ioc.util.sample.TestCar;
 import lombok.SneakyThrows;
 
+import java.lang.reflect.Constructor;
+
 public class ClsUtil {
 
     @SneakyThrows // 예외 처리 자동처리, forName 은 예외 처리 선언을 해야하나 생략가능
     public static <T> Class<T> loadClass(String clsPath) { // <T> 제네릭 타입파라미터 선언 - 메서드 안에서 T 타입 사용 가능
         return (Class<T>) Class.forName(clsPath); // 문자열로 주어진 클래스 이름을 실제 클래스로 로드해 리턴
         // Class<?> 이렇게 하면 매번 캐스팅이 필요하다. 그래서 여기서는 제네릭으로 형변환 해주면 호출하는 쪽에서 안전하게 사용가능
+    }
+
+    @SneakyThrows
+    public static TestCar construct(String clsPath, Object[] args) {
+        Class<TestCar> testCarClass = loadClass(clsPath); // clsPath 경로의 Class 객체를 불러온다.
+
+        // testCar Class 객체의 생성자 정보를 불러와서 가져온다.
+        Constructor<TestCar> constructor = (Constructor<TestCar>) testCarClass.getDeclaredConstructors()[0];
+
+        // 생성자에 args 정보를 매개변수로 넘겨준다.
+        return constructor.newInstance(args);
     }
 }
