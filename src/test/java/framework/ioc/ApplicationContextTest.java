@@ -1,6 +1,7 @@
 package framework.ioc;
 
 import com.domain.testPost.repository.TestPostRepository;
+import com.domain.testPost.service.TestFacadePostService;
 import com.domain.testPost.service.TestPostService;
 import com.framework.ioc.ApplicationContext;
 import org.junit.jupiter.api.BeforeAll;
@@ -62,6 +63,23 @@ public class ApplicationContextTest {
 
         // assertThat(객체).hasFieldOrPropertyWithValue("필드명", 기대값)→ 객체 내부의 필드/프로퍼티가 해당 값과 같은지 검증.들어있는지 검증
         assertThat(testPostService).hasFieldOrPropertyWithValue(
+                "testPostRepository",
+                applicationContext.genBean("testPostRepository")
+        );
+    }
+
+    @Test
+    @DisplayName("testFacadePostService has testPostService, testPostRepository")
+    public void t6() {
+        TestFacadePostService testFacadePostService = applicationContext
+                .genBean("testFacadePostService");
+
+        assertThat(testFacadePostService).hasFieldOrPropertyWithValue(
+                "testPostService",
+                applicationContext.genBean("testPostService")
+        );
+
+        assertThat(testFacadePostService).hasFieldOrPropertyWithValue(
                 "testPostRepository",
                 applicationContext.genBean("testPostRepository")
         );
