@@ -13,14 +13,23 @@ public class ClsUtil {
         // Class<?> 이렇게 하면 매번 캐스팅이 필요하다. 그래서 여기서는 제네릭으로 형변환 해주면 호출하는 쪽에서 안전하게 사용가능
     }
 
-    @SneakyThrows
     public static <T> T construct(String clsPath, Object[] args) {
-        Class<T> cls = loadClass(clsPath); // clsPath 경로의 Class 객체를 불러온다.
+        return construct(loadClass(clsPath), args);
+    }
 
-        // cls Class 객체의 생성자 정보를 불러와서 가져온다.
-        Constructor<T> constructor = (Constructor<T>) cls.getDeclaredConstructors()[0];
+    @SneakyThrows
+    public static <T> T construct(Class<T> cls, Object[] args) {
+        Constructor<T> constructor = getConstructor(cls,args);
 
-        // 생성자에 args 정보를 매개변수로 넘겨준다.
         return constructor.newInstance(args);
+        // 생성자를 호출해서 객체를 만듬
+        // args에 있는 Object[]{"BMW", 1234} 값을 TestCar(String name, int number) 생성자의 매개변수에 넣어줌
+    }
+
+    private static <T> Constructor<T> getConstructor(Class<T> cls, Object[] args) {
+        return (Constructor<T>) cls.getDeclaredConstructors()[0];
+        // getDeclaredConstructors
+        // 클래스에 선언된 생성자들을 모두 가지고 온다
+        // TestCar(String name, int number) 반환
     }
 }

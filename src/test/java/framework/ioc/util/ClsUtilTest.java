@@ -35,4 +35,14 @@ public class ClsUtilTest {
         assertThat(testShip.getName()).isEqualTo("HMM");
         assertThat(testShip.getNumber()).isEqualTo(1234);
     }
+
+    @Test
+    @DisplayName("ClsUtil.construct with cls")
+    void t3() {
+        // new TestCar("BMW", 1234); 와 같은 의미
+        TestCar testCar = ClsUtil.construct(TestCar.class, new Object[]{"BMW", 1234});
+
+        assertThat(testCar.getName()).isEqualTo("BMW");
+        assertThat(testCar.getNumber()).isEqualTo(1234);
+    }
 }
