@@ -2,6 +2,7 @@ package framework.ioc.util;
 
 import com.framework.ioc.util.ClsUtil;
 import com.framework.ioc.util.sample.TestCar;
+import com.framework.ioc.util.sample.TestShip;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,5 +25,14 @@ public class ClsUtilTest {
 
         assertThat(testCar.getName()).isEqualTo("BMW");
         assertThat(testCar.getNumber()).isEqualTo(1234);
+    }
+
+    @Test
+    @DisplayName("ClsUtil.construct")
+    void t2b() {
+        TestShip testShip = ClsUtil.construct("com.framework.ioc.util.sample.TestShip", new Object[]{"HMM", 1234});
+
+        assertThat(testShip.getName()).isEqualTo("HMM");
+        assertThat(testShip.getNumber()).isEqualTo(1234);
     }
 }

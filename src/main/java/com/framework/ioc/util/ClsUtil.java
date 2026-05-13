@@ -14,11 +14,11 @@ public class ClsUtil {
     }
 
     @SneakyThrows
-    public static TestCar construct(String clsPath, Object[] args) {
-        Class<TestCar> testCarClass = loadClass(clsPath); // clsPath 경로의 Class 객체를 불러온다.
+    public static <T> T construct(String clsPath, Object[] args) {
+        Class<T> cls = loadClass(clsPath); // clsPath 경로의 Class 객체를 불러온다.
 
-        // testCar Class 객체의 생성자 정보를 불러와서 가져온다.
-        Constructor<TestCar> constructor = (Constructor<TestCar>) testCarClass.getDeclaredConstructors()[0];
+        // cls Class 객체의 생성자 정보를 불러와서 가져온다.
+        Constructor<T> constructor = (Constructor<T>) cls.getDeclaredConstructors()[0];
 
         // 생성자에 args 정보를 매개변수로 넘겨준다.
         return constructor.newInstance(args);
