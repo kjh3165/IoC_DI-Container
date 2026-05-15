@@ -37,6 +37,13 @@ public class ClsUtil {
     public static Parameter[] getParameters(String clsPath, Object[] args) {
         Constructor constructor = getConstructor(loadClass(clsPath), args);
 
+        return getParameters(loadClass(clsPath), args);
+    }
+
+    public static <T> Parameter[] getParameters(Class<T> cls, Object[] args) {
+        Constructor<T> constructor = getConstructor(cls, args);
+
         return constructor.getParameters();
     }
+
 }
