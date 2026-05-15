@@ -48,8 +48,12 @@ public class ClsUtil {
     }
 
     public static String[] getParameterNames(String clsPath, Object[] args) {
+        return getParameterNames(loadClass(clsPath), args);
+    }
+
+    public static <T> String[] getParameterNames(Class<T> cls, Object[] args) {
         return Arrays.stream(
-                        getParameters(loadClass(clsPath), args)
+                        getParameters(cls, args)
                 )
                 .map(Parameter::getName)
                 .toArray(String[]::new);
