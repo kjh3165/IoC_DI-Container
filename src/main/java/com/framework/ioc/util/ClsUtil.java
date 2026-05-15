@@ -4,6 +4,7 @@ import com.framework.ioc.util.sample.TestCar;
 import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 
 public class ClsUtil {
 
@@ -31,5 +32,11 @@ public class ClsUtil {
         // getDeclaredConstructors
         // 클래스에 선언된 생성자들을 모두 가지고 온다
         // TestCar(String name, int number) 반환
+    }
+
+    public static Parameter[] getParameters(String clsPath, Object[] args) {
+        Constructor constructor = getConstructor(loadClass(clsPath), args);
+
+        return constructor.getParameters();
     }
 }
