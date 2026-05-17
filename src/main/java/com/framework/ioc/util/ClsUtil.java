@@ -36,6 +36,10 @@ public class ClsUtil {
     }
 
     private static Class[] getTypes(Object[] args) {
+        if (args instanceof Class[]) {
+            return (Class[]) args;
+        }
+
         return Arrays.stream(args)
                 .map(e -> {
                     if (e instanceof Boolean) {

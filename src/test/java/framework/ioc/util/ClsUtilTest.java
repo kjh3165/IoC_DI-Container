@@ -21,9 +21,11 @@ public class ClsUtilTest {
     }
 
     @Test
-    @DisplayName("ClsUtil.construct")
+    @DisplayName("ClsUtil.construct with clsPath")
     void t2() {
         TestCar testCar = ClsUtil.construct("com.framework.ioc.util.sample.TestCar", new Object[]{"BMW", 1234});
+        // 위 코드는 아래와 같은 의미이다.
+        // new TestCar("BMW", 1234);
 
         assertThat(testCar.getName()).isEqualTo("BMW");
         assertThat(testCar.getNumber()).isEqualTo(1234);
@@ -49,7 +51,7 @@ public class ClsUtilTest {
     }
 
     @Test
-    @DisplayName("ClsUtil.getParameters with clsPath")
+    @DisplayName("ClsUtil.getParameters with clsPath, parameters")
     void t4() {
         Parameter[] parameters = ClsUtil.getParameters("com.framework.ioc.util.sample.TestCar", new Object[]{"BMW", 1234});
 
@@ -61,9 +63,9 @@ public class ClsUtilTest {
     }
 
     @Test
-    @DisplayName("ClsUtil.getParameters with clsPath")
+    @DisplayName("ClsUtil.getParameters with clsPath, parameterTypes")
     void t5() {
-        Parameter[] parameters = ClsUtil.getParameters(TestCar.class , new Object[]{"BMW", 1234});
+        Parameter[] parameters = ClsUtil.getParameters("com.framework.ioc.util.sample.TestCar", new Class[]{String.class, int.class});
 
         assertThat(parameters[0].getType()).isEqualTo(String.class);
         assertThat(parameters[0].getName()).isEqualTo("name");
@@ -73,8 +75,32 @@ public class ClsUtilTest {
     }
 
     @Test
-    @DisplayName("ClsUtil.getParameterNames with clsPath")
+    @DisplayName("ClsUtil.getParameters with cls, parameters")
     void t6() {
+        Parameter[] parameters = ClsUtil.getParameters(TestCar.class, new Object[]{"BMW", 1234});
+
+        assertThat(parameters[0].getType()).isEqualTo(String.class);
+        assertThat(parameters[0].getName()).isEqualTo("name");
+
+        assertThat(parameters[1].getType()).isEqualTo(int.class);
+        assertThat(parameters[1].getName()).isEqualTo("number");
+    }
+
+    @Test
+    @DisplayName("ClsUtil.getParameters with cls, parameterTypes")
+    void t7() {
+        Parameter[] parameters = ClsUtil.getParameters(TestCar.class, new Class[]{String.class, int.class});
+
+        assertThat(parameters[0].getType()).isEqualTo(String.class);
+        assertThat(parameters[0].getName()).isEqualTo("name");
+
+        assertThat(parameters[1].getType()).isEqualTo(int.class);
+        assertThat(parameters[1].getName()).isEqualTo("number");
+    }
+
+    @Test
+    @DisplayName("ClsUtil.getParameterNames with clsPath, parameters")
+    void t8() {
         String[] parameterNames = ClsUtil.getParameterNames("com.framework.ioc.util.sample.TestCar", new Object[]{"BMW", 1234});
 
         assertThat(parameterNames[0]).isEqualTo("name");
@@ -82,9 +108,27 @@ public class ClsUtilTest {
     }
 
     @Test
-    @DisplayName("ClsUtil.getParameterNames with clsPath")
-    void t7() {
+    @DisplayName("ClsUtil.getParameterNames with clsPath, parameterTypes")
+    void t9() {
+        String[] parameterNames = ClsUtil.getParameterNames("com.framework.ioc.util.sample.TestCar", new Class[]{String.class, int.class});
+
+        assertThat(parameterNames[0]).isEqualTo("name");
+        assertThat(parameterNames[1]).isEqualTo("number");
+    }
+
+    @Test
+    @DisplayName("ClsUtil.getParameterNames with cls, parameters")
+    void t10() {
         String[] parameterNames = ClsUtil.getParameterNames(TestCar.class, new Object[]{"BMW", 1234});
+
+        assertThat(parameterNames[0]).isEqualTo("name");
+        assertThat(parameterNames[1]).isEqualTo("number");
+    }
+
+    @Test
+    @DisplayName("ClsUtil.getParameterNames with cls, parameterTypes")
+    void t11() {
+        String[] parameterNames = ClsUtil.getParameterNames(TestCar.class, new Class[]{String.class, int.class});
 
         assertThat(parameterNames[0]).isEqualTo("name");
         assertThat(parameterNames[1]).isEqualTo("number");
