@@ -30,7 +30,13 @@ public class ClsUtil {
 
     @SneakyThrows
     private static <T> Constructor<T> getConstructor(Class<T> cls, Object[] args) {
-        Class[] argType = Arrays.stream(args)
+        Class[] argType = getTypes(args);
+
+        return cls.getConstructor(argType);
+    }
+
+    private static Class[] getTypes(Object[] args) {
+        return Arrays.stream(args)
                 .map(e -> {
                     if (e instanceof Boolean) {
                         return boolean.class;
@@ -52,8 +58,6 @@ public class ClsUtil {
                     return e.getClass();
                 })
                 .toArray(Class[]::new);
-
-        return cls.getConstructor(argType);
     }
 
     public static Parameter[] getParameters(String clsPath, Object[] args) {
