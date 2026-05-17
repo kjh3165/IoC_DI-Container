@@ -28,11 +28,32 @@ public class ClsUtil {
         // args에 있는 Object[]{"BMW", 1234} 값을 TestCar(String name, int number) 생성자의 매개변수에 넣어줌
     }
 
+    @SneakyThrows
     private static <T> Constructor<T> getConstructor(Class<T> cls, Object[] args) {
-        return (Constructor<T>) cls.getDeclaredConstructors()[0];
-        // getDeclaredConstructors
-        // 클래스에 선언된 생성자들을 모두 가지고 온다
-        // TestCar(String name, int number) 반환
+        Class[] argType = Arrays.stream(args)
+                .map(e -> {
+                    if (e instanceof Boolean) {
+                        return boolean.class;
+                    } else if (e instanceof Byte) {
+                        return byte.class;
+                    } else if (e instanceof Short) {
+                        return short.class;
+                    } else if (e instanceof Integer) {
+                        return int.class;
+                    } else if (e instanceof Long) {
+                        return long.class;
+                    } else if (e instanceof Float) {
+                        return float.class;
+                    } else if (e instanceof Double) {
+                        return double.class;
+                    } else if (e instanceof Character) {
+                        return char.class;
+                    }
+                    return e.getClass();
+                })
+                .toArray(Class[]::new);
+
+        return cls.getConstructor(argType);
     }
 
     public static Parameter[] getParameters(String clsPath, Object[] args) {
